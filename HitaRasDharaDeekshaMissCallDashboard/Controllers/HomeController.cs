@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using HitaRasDharaDeekshaMissCallDashboard.Models;
 
 namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
@@ -17,6 +16,7 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Index(HomeViewModel input)
         {
             try
@@ -28,18 +28,15 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
                     {
                         _DbContext.DeekshaStatusTable.Add(input);
                         _DbContext.SaveChanges();
+                        return Json(new { Code = 0 }, JsonRequestBehavior.AllowGet);
                     }
-                    else
-                    {
-                        //return new ContentResult { Content = "<script> swal ('User already exists','You can update the status if required from Update Status page!','error')</script>" };
-                        return Json(new { Code = 1},JsonRequestBehavior.AllowGet);
-                    }
+
+                    return Json(new { Code = 1 }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                throw;
+                return Json(new { Code = 2 }, JsonRequestBehavior.AllowGet);
             }
             return View();
         }
@@ -57,9 +54,9 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult UpdateStatus(UpdateStatusViewModel input)
         {
-            var viewModel = new UpdateStatusViewModel();
             try
             {
                 int updatedStatus = (int)input.DeekshaStatus;
@@ -70,25 +67,17 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
                     {
                         userDetails.DeekshaStatus = updatedStatus;
                         _DbContext.SaveChanges();
+                        return Json(new { Code = 5 }, JsonRequestBehavior.AllowGet);
                     }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Users current status is same as new status. Updation not required.");
-                    }
+                    return Json(new { Code = 3 }, JsonRequestBehavior.AllowGet);
                 }
-                else
-                {
-                    ModelState.AddModelError("Error","User doesnot exist, Please verify the entered Mobile Number");
-                }
+                return Json(new { Code = 4 }, JsonRequestBehavior.AllowGet);
 
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                return Json(new { Code = 2 }, JsonRequestBehavior.AllowGet);
             }
-
-            return View(viewModel);
         }
 
         public ActionResult SmsLogs()

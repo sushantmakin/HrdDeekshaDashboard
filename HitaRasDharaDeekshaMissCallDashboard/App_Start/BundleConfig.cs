@@ -21,9 +21,8 @@ namespace HitaRasDharaDeekshaMissCallDashboard
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/sweetalert.min.js",
-                      "~/Scripts/sweetalert.css",
                       "~/Scripts/Myjs.js",
+                      "~/Scripts/sweetalert.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

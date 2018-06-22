@@ -7,6 +7,7 @@
 <div class="row">
     <div class="col-md-12">
         <form class="form-horizontal" id="AddDataForm">
+            @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
@@ -24,21 +25,19 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" id="SubmitBtn" value="Add Entry" class="btn btn-primary" />
+                    <input type="submit" id="SubmitBtnOfAddData" value="Add Entry" class="btn btn-primary" />
                 </div>
             </div>
         </form>
     </div>
 </div>
 <script>
-    $('#SubmitBtn').click(function () {
-        debugger;
+    $('#SubmitBtnOfAddData').click(function () {
         $.ajax({
             type: "POST",
             url: "/Home/Index",
             data: $('#AddDataForm').serialize(),
             success: function (result) {
-                debugger;
                 console.log('data is : ' + result.Code);
                 showPopup(result.Code);
             },
@@ -46,5 +45,6 @@
                 console.log('error : data code is : ' + data.Code);
             }
         });
+        return false;
     });
 </script>

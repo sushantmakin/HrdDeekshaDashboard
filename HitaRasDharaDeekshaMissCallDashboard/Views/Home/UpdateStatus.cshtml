@@ -7,31 +7,50 @@
 
 <div class="row">
     <div class="col-md-12">
-        @using (Html.BeginForm("UpdateStatus", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form class="form-horizontal" id="UpdateDataForm">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
             <div class="form-group">
-                @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
+                @Html.LabelFor(m => m.Phone, new {@class = "col-md-2 control-label"})
                 <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.Phone, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.Phone, "", new {@class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.DeekshaStatus, new { @class = "col-md-2 control-label" })
+                @Html.LabelFor(m => m.DeekshaStatus, new {@class = "col-md-2 control-label"})
                 <div class="col-md-10">
-                    @Html.DropDownListFor(m => m.DeekshaStatus,
+                    @*@Html.DropDownListFor(m => m.DeekshaStatus,
                         new SelectList(Enum.GetValues(typeof(Status))),
                         "Select New Status..",
-                        new { @class = "form-control col-md-10" })
-                    @Html.ValidationMessageFor(m => m.DeekshaStatus, "", new { @class = "text-danger" })
+                        new { @class = "form-control col-md-10" })*@
+                    @Html.EnumDropDownListFor(model => model.DeekshaStatus, // Model field that will be used to store user selection
+                        new {@class = "form-control"}) @* A class name to assign to "select" tag *@
+                    @Html.ValidationMessageFor(m => m.DeekshaStatus, "", new {@class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Update Status" class="btn btn-primary" />
+                    <input type="submit" value="Update Status" id="SubmitBtnOfUpdateData" class="btn btn-primary"/>
                 </div>
             </div>
-        }
-    </div>
-</div>
+        </form>
+            </div>
+        </div>
+        <script>
+            $('#SubmitBtnOfUpdateData').click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/UpdateStatus",
+                    data: $('#UpdateDataForm').serialize(),
+                    success: function (result) {
+                        console.log('data is : ' + result.Code);
+                        showPopup(result.Code);
+                    },
+                    error: function (data) {
+                        console.log('error : data code is : ' + data.Code);
+                    }
+                });
+                return false;
+            });
+        </script>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace HitaRasDharaDeekshaMissCallDashboard.Models
 {
@@ -18,9 +19,16 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Models
 
     public enum Status
     {
+        [Description("Pending")]
         Pending,
-        Path1,
-        Path2,
-        Granted
+
+        [Display(Name = "Bhagwat Rahesya for 1 year")]
+        BhagwatRahesya,
+
+        [Display(Name = "Deeksha on 15th September 2018")]
+        Deeksha15Sep,
+
+        [Display(Name = "Deeksha in March 2019 (Holi)")]
+        DeekshaMarch2019
     }
 }
