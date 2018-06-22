@@ -1,0 +1,37 @@
+﻿@using HitaRasDharaDeekshaMissCallDashboard.Models
+@model UpdateStatusViewModel
+<div class="header">
+    <h2>Update Status</h2>
+    <p> Kindly fill in the details of the existing applicant to update the status.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("UpdateStatus", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DeekshaStatus, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.DeekshaStatus,
+                        new SelectList(Enum.GetValues(typeof(Status))),
+                        "Select New Status..",
+                        new { @class = "form-control col-md-10" })
+                    @Html.ValidationMessageFor(m => m.DeekshaStatus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Update Status" class="btn btn-primary" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

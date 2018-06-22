@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "Content/sweetalert/sweet-alert-animations.css",
+    "inputFile": "Content/sweetalert/sweet-alert-animations.less"
+  },
+  {
+    "outputFile": "Content/sweetalert/sweet-alert-combine.css",
+    "inputFile": "Content/sweetalert/sweet-alert-combine.less"
+  }
+]
