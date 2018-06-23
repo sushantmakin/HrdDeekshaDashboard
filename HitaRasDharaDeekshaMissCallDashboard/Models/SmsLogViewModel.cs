@@ -14,6 +14,10 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Models
 
     public class SmsLogData
     {
+        [Required]
+        [Display(Name = "Id")]
+        [Key]
+        public string Id { get; set; }
 
         [Required]
         [Display(Name = "Name")]
@@ -21,12 +25,11 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Models
 
         [Required]
         [Display(Name = "Phone Number")]
-        [Key]
         public string Phone { get; set; }
 
         [Required]
         [Display(Name = "Status")]
-        public string Status { get; set; }
+        public int Status { get; set; }
 
         [Required]
         [Display(Name = "Timestamp")]
@@ -35,5 +38,6 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Models
         [Required]
         [Display(Name = "SMS sent status")]
         public Boolean SmsSentStatus { get; set; }
+
     }
 }

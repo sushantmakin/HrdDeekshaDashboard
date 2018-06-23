@@ -21,17 +21,40 @@
                                     <th onclick="sortTable(2)">Mobile Number</th>
                                     <th onclick="sortTable(3)">Deeksha Status</th>
                                     <th onclick="sortTable(4)">Sms Delivery Status</th>
+                                    <th onclick="sortTable(5)">Id</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model.ContentItems)
                                 {
-                                    var cssClass = item.SmsSentStatus ? "success" : "danger";
+                                    var cssClass = item.Status==-1? "" : item.SmsSentStatus ? "success" : "danger";
+                                    var deekshaStatusInText = "";
+                                    switch (@item.Status)
+                                    {
+                                        case 0:
+                                            deekshaStatusInText = "Pending";
+                                            break;
+                                        case 1:
+                                            deekshaStatusInText = "Bhagwat Rahesya for 1 year";
+                                            break;
+                                        case 2:
+                                            deekshaStatusInText = "Deeksha on 15th September 2018";
+                                            break;
+                                        case 3:
+                                            deekshaStatusInText = "Deeksha in March 2019 (Holi)";
+                                            break;
+                                        case -1:
+                                            deekshaStatusInText = "Unknown";
+                                            break;
+                                        default:
+                                            deekshaStatusInText = item.Status.ToString();
+                                            break;
+                                    }
                                     <tr class="@cssClass">
                                         <td>@item.Timestamp</td>
                                         <td>@item.Name</td>
                                         <td>@item.Phone</td>
-                                        <td>@item.Status</td>
+                                        <td>@deekshaStatusInText</td>
                                         @if (item.SmsSentStatus)
                                         {
                                             <td> Delivered </td>
@@ -40,9 +63,10 @@
                                         {
                                             <td> Failed </td>
                                         }
+                                        <td> @item.Id</td>
                                     </tr>
                                 }
-                               </tbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -88,7 +112,7 @@
             rows = table.getElementsByTagName("TR");
             /*Loop through all table rows (except the
             first, which contains table headers):*/
-            for (i = 1; i < (rows.length - 1) ; i++) {
+            for (i = 1; i < (rows.length - 1); i++) {
                 //start by saying there should be no switching:
                 shouldSwitch = false;
                 /*Get the two elements you want to compare,
