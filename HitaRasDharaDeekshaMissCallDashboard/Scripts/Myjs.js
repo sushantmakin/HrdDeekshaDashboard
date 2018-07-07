@@ -24,6 +24,9 @@
         case 7:
             swal('Success !', 'Applicants data added successfully but SMS could not be sent due to a technical reason.', 'warning');
             break;
+        case 8:
+            swal('Success !', 'Deeksha Dashboard Data is exported Successfully.', 'success');
+            break;
     }
 };
 

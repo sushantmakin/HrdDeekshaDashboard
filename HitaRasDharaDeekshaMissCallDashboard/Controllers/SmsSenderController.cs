@@ -90,11 +90,11 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
                     break;
                 case 0:
                     smsData =
-                        "Shree Harivansh {0},We have received your Diksha Nivedan Form and the same is in pending state. You will recieve an SMS with the update as and when it is replied upon by Maharaj Shree.";
+                        "Shree Harivansh {0},We have received your Diksha Nivedan Form and your file is saved succesfully. You will recieve an SMS with the update as and when it is replied upon by Maharaj Shree.";
                     break;
                 case 1:
                     smsData =
-                        "Shree Harivansh {0},We have received your Diksha Nivedan Form.Please read Bhagwat Reshasaya of Shree Dongre Ji Maharaj daily for a year and fill your Diksha Nivedan form again, after one year.Bhagwat Rehasaya of Shree Dongre Ji Maharaj is easily available at Spritual Book Stores.";
+                        "Shree Harivansh {0},We have received your Diksha Nivedan Form.Please read Bhagwat Rehasaya of Shree Dongre Ji Maharaj daily for a year and fill your Diksha Nivedan form again, after one year.Bhagwat Rehasaya of Shree Dongre Ji Maharaj is easily available at Spritual Book Stores.";
                     break;
                 case 2:
                     smsData =

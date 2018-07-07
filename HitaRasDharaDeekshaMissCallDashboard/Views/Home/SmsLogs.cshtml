@@ -10,18 +10,21 @@
             <div id="wrap">
                 <div class="container">
                     <div class="form-group">
-                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search.." title="Type in a search parameter">
+                        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search.." title="Type in a search parameter" /> 
+                        <button id="ExportButton" type="button" class="btn btn-info btn-sm" onclick="location.href='@Url.Action("ExportListFromTsvSmsLog", "Home")'" style="float:right">
+                            <span class="glyphicon glyphicon-save"></span> Download
+                        </button>
                     </div>
                     <div class="form-group">
                         <table id="myTable" class="datatable table table-striped table-bordered table-hover">
                             <thead>
                                 <tr id="tableHeader">
-                                    <th onclick="sortTable(0)">Time Stamp</th>
-                                    <th onclick="sortTable(1)">Name</th>
-                                    <th onclick="sortTable(2)">Mobile Number</th>
-                                    <th onclick="sortTable(3)">Deeksha Status</th>
-                                    <th onclick="sortTable(4)">Sms Delivery Status</th>
-                                    <th onclick="sortTable(5)">Id</th>
+                                    <th>Time Stamp&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort" onclick="sortTable(0)"></span></th>
+                                    <th>Name&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(1)"></span></th>
+                                    <th>Mobile Number&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(2)"></span></th>
+                                    <th>Deeksha Status&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(3)"></span></th>
+                                    <th>Sms Delivery Status&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(4)"></span></th>
+                                    <th>Id&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(5)"></span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,6 +79,8 @@
 </div>
 
 <script>
+    $('.glyphicon-sort').css({ 'cursor': 'pointer' });
+
     function myFunction() {
         var input, filter, found, table, tr, td, i, j;
         input = document.getElementById("myInput");
@@ -152,5 +157,4 @@
             }
         }
     }
-
 </script>
