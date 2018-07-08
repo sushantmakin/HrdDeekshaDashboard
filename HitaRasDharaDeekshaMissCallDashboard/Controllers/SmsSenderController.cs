@@ -25,7 +25,7 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
             string smsContent = "";
             int deekshaStatus = 1;
             string URL =
-                "http://sms.wishsolution.com/SecureApi.aspx?usr=HITRAS&pwd=india123&smstype=TextSMS&to={0}&msg={1}&rout=Transactional&from=HITRAS";
+                "http://sms.wishsolution.com/Api.aspx?usr=HITRAS&pwd=india123&smstype=TextSMS&to={0}&msg={1}&rout=Transactional&from=HITRAS";
             var userDetails = _DbContext2.DeekshaStatusTable.FirstOrDefault(t => t.Phone == phone);
             deekshaStatus = userDetails != null ? userDetails.DeekshaStatus : -1;
             smsContent = userDetails != null ? string.Format(GetMessageFromStatus(deekshaStatus), userDetails.Name) : GetMessageFromStatus(deekshaStatus);
