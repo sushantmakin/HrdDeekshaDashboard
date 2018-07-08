@@ -25,7 +25,7 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
             string smsContent = "";
             int deekshaStatus = 1;
             string URL =
-                "http://sms.wishsolution.com/SecureApi.aspx?usr=HITRAS&key=A8B33272-A7A1-45C9-8782-3C3F3E032668&smstype=TextSMS&to={0}&msg={1}&rout=Transactional&from=HITRAS";
+                "http://sms.wishsolution.com/SecureApi.aspx?usr=HITRAS&pwd=india123&smstype=TextSMS&to={0}&msg={1}&rout=Transactional&from=HITRAS";
             var userDetails = _DbContext2.DeekshaStatusTable.FirstOrDefault(t => t.Phone == phone);
             deekshaStatus = userDetails != null ? userDetails.DeekshaStatus : -1;
             smsContent = userDetails != null ? string.Format(GetMessageFromStatus(deekshaStatus), userDetails.Name) : GetMessageFromStatus(deekshaStatus);
@@ -86,27 +86,27 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
             {
                 case -1:
                     smsData =
-                        "Shree Harivansh, We could not find any entry with this mobile number in our records. Kindly give a misscall with the number registered in the Deekhsa Nivedan Form.";
+                        "Shree Harivansh, We have not found any entry of this mobile number in our records. Please give a missed call from the number mentioned on your Dikhsa Nivedan form.";
                     break;
                 case 0:
                     smsData =
-                        "Shree Harivansh {0},We have received your Diksha Nivedan Form and your file is saved succesfully. You will recieve an SMS with the update as and when it is replied upon by Maharaj Shree.";
+                        "Shree Harivansh {0},We have received your Diksha Nivedan form and you will receive an update on the status of your diksha nivedan via SMS.";
                     break;
                 case 1:
                     smsData =
-                        "Shree Harivansh {0},We have received your Diksha Nivedan Form.Please read Bhagwat Rehasaya of Shree Dongre Ji Maharaj daily for a year and fill your Diksha Nivedan form again, after one year.Bhagwat Rehasaya of Shree Dongre Ji Maharaj is easily available at Spritual Book Stores.";
+                        "Shree Harivansh {0},We have received your Diksha Nivedan form. Please read Bhagwat Rehasaya of Shree Dongre Ji Maharaj daily for a year and fill a new Diksha Nivedan form , after one year.Bhagwat Rehasaya of Shree Dongre Ji Maharaj is easily available online and at spiritual book stores.";
                     break;
                 case 2:
                     smsData =
-                        "Shree Harivansh {0},We have received your Diksha Nivedan Form.Please do the Vrindavan Shat leela(reading) daily, from now onwards and please reach for your diksha on 15 September, 2018, morning 10 o'clock, at Madan Taer, Parikrama Marg, Vrindavan.Location: https://goo.gl/CRBQSi .For Downloading Vrindavan Shat leela, visit https://goo.gl/BACQJh";
+                        "Shree Harivansh {0},We have received your Diksha Nivedan form.Please come for your diksha on 15th September, 2018, at 10am to Madan Taer, Parikrama Marg, Vrindavan.Location: https://goo.gl/CRBQSi .It is compulsory to read Vrindavan Shat Leela daily from today onwards.To Download Vrindavan Shat Leela click here https://goo.gl/BACQJh";
                     break;
                 case 3:
                     smsData =
-                        "Shree Harivansh {0},We have received your Diksha Nivedan Form.Please do the Vrindavan Shat leela daily, from now onwards till next year, Holi Mahotsava Katha in March 2019, and we will inform you of your Diksha Dates in February 2019.For Downloading Vrindavan Shat leela, kindly visit: https://goo.gl/BACQJh";
+                        "Shree Harivansh {0},We have received your Diksha Nivedan form. We will inform you of the date of Diksha in Feb 2019. It is compulsory to read Vrindavan Shat leela daily from today onwards.For Downloading Vrindavan Shat leela, click here https://goo.gl/BACQJh";
                     break;
                 default:
                     smsData =
-                        "Shree Harivansh, We could not find any entry with this mobile number in our records. Kindly give a misscall with the number registered in the Deekhsa Nivedan Form.";
+                        "Shree Harivansh, We have not found any entry of this mobile number in our records. Please give a missed call from the number mentioned on your Dikhsa Nivedan form.";
                     break;
             }
             return smsData;
