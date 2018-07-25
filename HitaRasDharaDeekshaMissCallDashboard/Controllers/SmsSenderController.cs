@@ -25,7 +25,7 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
             string smsContent = "";
             int deekshaStatus = 1;
             string URL =
-                "http://sms.wishsolution.com/Api.aspx?usr=HITRAS&pwd=india123&smstype=TextSMS&to={0}&msg={1}&rout=Transactional&from=HITRAS";
+                "http://sms.wishsolution.com/Api.aspx?usr=HITRASAPI&pwd=india123&smstype=TextSMS&to={0}&msg={1}&rout=Transactional&from=HITRAS";
             var userDetails = _DbContext2.DeekshaStatusTable.FirstOrDefault(t => t.Phone == phone);
             deekshaStatus = userDetails != null ? userDetails.DeekshaStatus : -1;
             smsContent = userDetails != null ? string.Format(GetMessageFromStatus(deekshaStatus), userDetails.Name) : GetMessageFromStatus(deekshaStatus);
@@ -40,9 +40,11 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
                     Name = userDetails.Name,
                     Phone = userDetails.Phone,
                     Status = userDetails.DeekshaStatus,
-                    Timestamp = DateTime.Now,
+                    Timestamp = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow,
+                        TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")),
                     SmsSentStatus = true,
-                    Id = userDetails.Phone + "#" + userDetails.DeekshaStatus + "_" + userDetails.Name + DateTime.Now,
+                    Id = userDetails.Phone + "#" + userDetails.DeekshaStatus + "_" + userDetails.Name + TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow,
+                             TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"))
                 };
                 if (response.IsSuccessStatusCode)
                 {
@@ -62,7 +64,8 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
                     Name = "Unknown",
                     Phone = phone,
                     Status = -1,
-                    Timestamp = DateTime.Now,
+                    Timestamp = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow,
+                        TimeZoneInfo.FindSystemTimeZoneById("India Standard Time")),
                     SmsSentStatus = true,
                     Id = phone+ "#" + -1 + "_" +DateTime.Now
                 };
@@ -103,6 +106,10 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
                 case 3:
                     smsData =
                         "Shree Harivansh {0},We have received your Diksha Nivedan form. We will inform you of the date of Diksha in Feb 2019. It is compulsory to read Vrindavan Shat leela daily from today onwards.For Downloading Vrindavan Shat leela, click here https://goo.gl/BACQJh";
+                    break;
+                case 4:
+                    smsData =
+                        "Shree Harivansh {0},We have received your Diksha Nivedan form.Please come for your diksha on 16th September, 2018, at 10am to Madan Taer, Parikrama Marg, Vrindavan.Location: https://goo.gl/CRBQSi .It is compulsory to read Vrindavan Shat Leela daily from today onwards.To Download Vrindavan Shat Leela click here https://goo.gl/BACQJh";
                     break;
                 default:
                     smsData =

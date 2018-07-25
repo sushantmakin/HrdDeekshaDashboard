@@ -29,6 +29,9 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Models
         Deeksha15Sep,
 
         [Display(Name = "Deeksha in March 2019 (Holi)")]
-        DeekshaMarch2019
+        DeekshaMarch2019,
+
+        [Display(Name = "Deeksha on 16th September 2018")]
+        Deeksha16Sep
     }
 }
