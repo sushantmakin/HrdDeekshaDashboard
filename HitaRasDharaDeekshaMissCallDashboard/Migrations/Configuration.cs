@@ -10,7 +10,6 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "HitaRasDharaDeekshaMissCallDashboard.Models.ApplicationDbContext";
         }
 
         protected override void Seed(HitaRasDharaDeekshaMissCallDashboard.Models.ApplicationDbContext context)

@@ -8,23 +8,22 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Models
 {
     public class DashboardViewModel
     {
-
         public List<HomeViewModel> ContentItems { get; set; }
     }
 
-    public class DashboardData
-    {
+    //public class DashboardData
+    //{
 
-        [Required]
-        [Display(Name = "Name")]
-        public string Name { get; set; }
+    //    [Required]
+    //    [Display(Name = "Name")]
+    //    public string Name { get; set; }
 
-        [Required]
-        [Display(Name = "Phone Number")]
-        public string Phone { get; set; }
+    //    [Required]
+    //    [Display(Name = "Phone Number")]
+    //    public string Phone { get; set; }
 
-        [Required]
-        [Display(Name = "Status")]
-        public string Status { get; set; }
-    }
+    //    [Required]
+    //    [Display(Name = "Status")]
+    //    public string Status { get; set; }
+    //}
 }

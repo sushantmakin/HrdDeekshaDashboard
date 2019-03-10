@@ -27,6 +27,8 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Models
 
         public DbSet<SmsLogData> SmsLogTable { get; set; }
         public DbSet<HomeViewModel> DeekshaStatusTable { get; set; }
+        public DbSet<StatusViewModel> StatusMappingTable { get; set; }
+        public DbSet<CMSViewModel> CMSDataTable { get; set; }
 
         public static ApplicationDbContext Create()
         {

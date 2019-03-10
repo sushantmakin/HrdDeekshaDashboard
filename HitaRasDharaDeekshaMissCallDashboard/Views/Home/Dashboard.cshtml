@@ -1,4 +1,17 @@
 ﻿@model HitaRasDharaDeekshaMissCallDashboard.Models.DashboardViewModel
+
+@functions {
+    private string DeekshaStatusInText(int itemDeekshaStatus)
+    {
+        foreach (var item in ViewBag.statusData)
+        {
+            if (item.StatusId == itemDeekshaStatus)
+                return item.Status;
+        }
+        return "";
+    }
+
+}
 <div class="header">
     <h2>Dashboard</h2>
     <p>The current status of Deeksha Applications.</p>
@@ -20,40 +33,22 @@
                         <table id="myTable" class="datatable table table-striped table-bordered table-hover">
                             <thead>
                                 <tr id="tableHeader">
-                                    <th>Name&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(0)"></span></th>
-                                    <th>Mobile Number&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(1)"></span></th>
-                                    <th>Deeksha Status&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(2)"></span></th>
+                                    <th>Id&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(1)"></span></th>
+                                    <th>Name&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(2)"></span></th>
+                                    <th>Mobile Number&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(3)"></span></th>
+                                    <th>City&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(4)"></span></th>
+                                    <th>Deeksha Status&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-sort"  onclick="sortTable(5)"></span></th>
                                 </tr>
                             </thead>
                             <tbody>
                             @foreach (var item in Model.ContentItems)
                             {
-                                var deekshaStatusInText = "";
-                                switch (@item.DeekshaStatus)
-                                {
-                                    case 0:
-                                        deekshaStatusInText = "Pending";
-                                        break;
-                                    case 1:
-                                        deekshaStatusInText = "Bhagwat Rahesya for 1 year";
-                                        break;
-                                    case 2:
-                                        deekshaStatusInText = "Deeksha on 15th September 2018";
-                                        break;
-                                    case 3:
-                                        deekshaStatusInText = "Deeksha in March 2019 (Holi)";
-                                        break;
-                                    case 4:
-                                        deekshaStatusInText = "Deeksha on 16th September 2018";
-                                        break;
-                                    default:
-                                        deekshaStatusInText = item.DeekshaStatus.ToString();
-                                        break;
-                                }
                                 <tr>
+                                    <td>@item.DeekshaId</td>
                                     <td>@item.Name</td>
                                     <td>@item.Phone</td>
-                                    <td>@deekshaStatusInText</td>
+                                    <td>@item.City</td>
+                                    <td>@DeekshaStatusInText(item.DeekshaStatus)</td>
                                 </tr>
                                 }
                            </tbody>

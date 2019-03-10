@@ -1,4 +1,5 @@
-﻿@model HitaRasDharaDeekshaMissCallDashboard.Models.HomeViewModel
+﻿@using System.Web.UI.WebControls
+@model HitaRasDharaDeekshaMissCallDashboard.Models.HomeViewModel
 <div class="header">
     <h2>Add New Entry</h2>
     <p> Kindly fill in the details of the new applicant. The status by default will be feeded as Pending. </p>
@@ -16,10 +17,32 @@
                 </div>
             </div>
             <div class="form-group">
+                @Html.LabelFor(m => m.City, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @{
+                var listItems = new List<ListItem>();
+                foreach (var item in ViewBag.StatusMapping)
+                {
+                    listItems.Add(new ListItem(item.Status, item.StatusId.ToString()));
+                }
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.DeekshaStatus, new {@class = "col-md-2 control-label"})
+                <div class="col-md-10">
+                    @Html.DropDownList("DeekshaStatus", new SelectList(listItems, "Value", "Text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.DeekshaStatus, "", new {@class = "text-danger"})
                 </div>
             </div>
             <div class="form-group">
@@ -38,7 +61,19 @@
             data: $('#AddDataForm').serialize(),
             success: function (result) {
                 console.log('data is : ' + result.Code);
-                showPopup(result.Code);
+                if (result.Code === 0) {
+                    var content = document.createElement('div');
+                    content.innerHTML = 'Applicant data added successfully and SMS sent to Applicant. <br/> <br/>  <strong> Application No. : ' + result.UniqueNumber + '</strong>';
+                    swal({
+                        title: 'Success!',
+                        content: content,
+                        icon: "success"
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    showPopup(result.Code);
+                }
             },
             error: function (data) {
                 console.log('error : data code is : ' + data.Code);

@@ -13,6 +13,8 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
     {
         public ActionResult Index()
         {
+            ApplicationDbContext _dbContext = new ApplicationDbContext();
+            ViewBag.StatusMapping = _dbContext.StatusMappingTable.Select(m => m).Where(x => x.Visible);
             return View();
         }
 
@@ -25,20 +27,15 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var userDetails = _DbContext.DeekshaStatusTable.Find(input.Phone);
-                    if (userDetails == null)
-                    {
                         _DbContext.DeekshaStatusTable.Add(input);
                         _DbContext.SaveChanges();
-                        bool isSmsSent = new SmsSenderController().InvokeSms(input.Phone);
+                        bool isSmsSent = new SmsSenderController().InvokeSystemSms(input.DeekshaId);
                         if (isSmsSent)
                         {
-                            return Json(new { Code = 0 }, JsonRequestBehavior.AllowGet);
+                            return Json(new { Code = 0, UniqueNumber = input.DeekshaId }, JsonRequestBehavior.AllowGet);
                         }
                         return Json(new { Code = 7 }, JsonRequestBehavior.AllowGet);
                     }
-                    return Json(new { Code = 1 }, JsonRequestBehavior.AllowGet);
-                }
             }
             catch (Exception ex)
             {
@@ -52,11 +49,14 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
             ApplicationDbContext _DbContextForDashboard = new ApplicationDbContext();
             var viewModel =
                 new DashboardViewModel { ContentItems = _DbContextForDashboard.DeekshaStatusTable.Select(m => m).ToList() };
+            ViewBag.statusData = _DbContextForDashboard.StatusMappingTable.ToList();
             return View(viewModel);
         }
 
         public ActionResult UpdateStatus()
         {
+            ApplicationDbContext _dbContext = new ApplicationDbContext();
+            ViewBag.StatusMapping = _dbContext.StatusMappingTable.Select(m => m).Where(x => x.Visible);
             return View();
         }
 
@@ -67,15 +67,15 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
             ApplicationDbContext _DbContextForUpdateStatus = new ApplicationDbContext();
             try
             {
-                int updatedStatus = (int)input.DeekshaStatus;
-                var userDetails = _DbContextForUpdateStatus.DeekshaStatusTable.Find(input.Phone);
+                int updatedStatus = input.DeekshaStatus;
+                var userDetails = _DbContextForUpdateStatus.DeekshaStatusTable.Find(input.DeekshaId);
                 if (userDetails != null)
                 {
                     if (userDetails.DeekshaStatus != updatedStatus)
                     {
                         userDetails.DeekshaStatus = updatedStatus;
                         _DbContextForUpdateStatus.SaveChanges();
-                        bool isSmsSent = new SmsSenderController().InvokeSms(userDetails.Phone);
+                        bool isSmsSent = new SmsSenderController().InvokeSystemSms(userDetails.DeekshaId);
                         if (isSmsSent)
                         {
                             return Json(new { Code = 5 }, JsonRequestBehavior.AllowGet);
@@ -93,10 +93,27 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
             }
         }
 
+        public bool Reseed()
+        {
+            try
+            {
+                ApplicationDbContext dbContext = new ApplicationDbContext();
+                dbContext.Database.ExecuteSqlCommand("DBCC CHECKIDENT('HomeViewModels', RESEED, 0)");
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+
         public ActionResult SmsLogs()
         {
             ApplicationDbContext _DbContextForSmsLogs = new ApplicationDbContext();
             var viewModel = new SmsLogViewModel { ContentItems = _DbContextForSmsLogs.SmsLogTable.Select(m => m).ToList() };
+            ViewBag.statusData = _DbContextForSmsLogs.StatusMappingTable.ToList();
+
             return View(viewModel);
         }
 

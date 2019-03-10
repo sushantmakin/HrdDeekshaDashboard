@@ -1,4 +1,17 @@
 ﻿@model HitaRasDharaDeekshaMissCallDashboard.Models.SmsLogViewModel
+@functions {
+    private string DeekshaStatusInText(int itemDeekshaStatus)
+    {
+        foreach (var item in ViewBag.statusData)
+        {
+            if (item.StatusId == itemDeekshaStatus)
+                return item.Status;
+        }
+        return "";
+    }
+
+}
+
 <div class="header">
     <h2>SMS Logs</h2>
     <p>Logs of SMS sent to applications as a response of misscall.</p>
@@ -31,36 +44,12 @@
                                 @foreach (var item in Model.ContentItems)
                                 {
                                     var cssClass = item.Status==-1? "" : item.SmsSentStatus ? "success" : "danger";
-                                    var deekshaStatusInText = "";
-                                    switch (@item.Status)
-                                    {
-                                        case 0:
-                                            deekshaStatusInText = "Pending";
-                                            break;
-                                        case 1:
-                                            deekshaStatusInText = "Bhagwat Rahesya for 1 year";
-                                            break;
-                                        case 2:
-                                            deekshaStatusInText = "Deeksha on 15th September 2018";
-                                            break;
-                                        case 3:
-                                            deekshaStatusInText = "Deeksha in March 2019 (Holi)";
-                                            break;
-                                        case 4:
-                                            deekshaStatusInText = "Deeksha on 15th September 2018";
-                                            break;
-                                        case -1:
-                                            deekshaStatusInText = "Unknown";
-                                            break;
-                                        default:
-                                            deekshaStatusInText = item.Status.ToString();
-                                            break;
-                                    }
                                     <tr class="@cssClass">
                                         <td>@item.Timestamp</td>
+                                        <td>@item.Id</td>
                                         <td>@item.Name</td>
                                         <td>@item.Phone</td>
-                                        <td>@deekshaStatusInText</td>
+                                        <td>@DeekshaStatusInText(@item.Status)</td>
                                         @if (item.SmsSentStatus)
                                         {
                                             <td> Delivered </td>
@@ -69,7 +58,6 @@
                                         {
                                             <td> Failed </td>
                                         }
-                                        <td> @item.Id</td>
                                     </tr>
                                 }
                             </tbody>

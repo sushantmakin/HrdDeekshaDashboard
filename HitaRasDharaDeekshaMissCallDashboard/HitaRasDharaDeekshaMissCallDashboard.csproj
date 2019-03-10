@@ -203,13 +203,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201806181134520_InitialCreate.cs" />
-    <Compile Include="Migrations\201806181134520_InitialCreate.Designer.cs">
-      <DependentUpon>201806181134520_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201903100806368_CMS.cs" />
+    <Compile Include="Migrations\201903100806368_CMS.Designer.cs">
+      <DependentUpon>201903100806368_CMS.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CMSViewModel.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
+    <Compile Include="Models\StatusViewModel.cs" />
     <Compile Include="Models\UpdateStatusViewModel.cs" />
     <Compile Include="Models\SmsLogViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
@@ -302,8 +304,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806181134520_InitialCreate.resx">
-      <DependentUpon>201806181134520_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201903100806368_CMS.resx">
+      <DependentUpon>201903100806368_CMS.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
