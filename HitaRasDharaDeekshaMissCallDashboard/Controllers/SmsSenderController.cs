@@ -56,7 +56,8 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
         {
             ApplicationDbContext _DbContext2 = new ApplicationDbContext();
             string smsContent;
-            string URL = _DbContext2.CMSDataTable.Find("SmsApiUrl").Value; var usersWithProvidedMobileNumber = _DbContext2.DeekshaStatusTable.Select(x => x).Where(t => t.Phone == mobileNumber).ToList();
+            string URL = _DbContext2.CMSDataTable.Find("SmsApiUrl").Value;
+            var usersWithProvidedMobileNumber = _DbContext2.DeekshaStatusTable.Select(x => x).Where(t => t.Phone.Equals(mobileNumber)).ToList();
             if (usersWithProvidedMobileNumber.Count == 0)
             {
                 smsContent = _DbContext2.CMSDataTable.Find("UnknownUser").Value;
@@ -119,9 +120,10 @@ namespace HitaRasDharaDeekshaMissCallDashboard.Controllers
             ApplicationDbContext _dbContext = new ApplicationDbContext();
             string queryParameter = _dbContext.CMSDataTable.Find("SmsQueryParameter").Value;
             string mobile = Request.QueryString[queryParameter];
+            string reducedMobile = mobile.Substring(mobile.Length - 10);
             if (!mobile.IsNullOrWhiteSpace())
             {
-                return InvokeMissCallSms(mobile);
+                return InvokeMissCallSms(reducedMobile);
             }
             return false;
         }
